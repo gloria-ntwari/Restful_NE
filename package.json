@@ -1,0 +1,20 @@
+{
+  "name": "xwz-parking-system",
+  "version": "1.0.0",
+  "description": "Root orchestrator for XWZ Parking Management System microservices",
+  "private": true,
+  "scripts": {
+    "install-all": "npm install && cd Backend/api_gateway && npm install && cd ../auth_service && npm install && cd ../billing_service && npm install && cd ../entry_service && npm install && cd ../packing_service && npm install && cd ../report_service && npm install && cd ../../frontend && npm install",
+    "dev": "concurrently -n \"GATEWAY,AUTH,PARKING,ENTRY,BILLING,REPORT,FRONTEND\" -c \"cyan,magenta,yellow,blue,green,red,white\" \"npm run dev:gateway\" \"npm run dev:auth\" \"npm run dev:parking\" \"npm run dev:entry\" \"npm run dev:billing\" \"npm run dev:report\" \"npm run dev:frontend\"",
+    "dev:gateway": "cd Backend/api_gateway && npm run dev",
+    "dev:auth": "cd Backend/auth_service && npm run dev",
+    "dev:parking": "cd Backend/packing_service && npm run dev",
+    "dev:entry": "cd Backend/entry_service && npm run dev",
+    "dev:billing": "cd Backend/billing_service && npm run dev",
+    "dev:report": "cd Backend/report_service && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
