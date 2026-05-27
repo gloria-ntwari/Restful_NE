@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // Pages (to be created)
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import VerifyOtpPage from './pages/VerifyOtpPage';
 import Dashboard from './pages/Dashboard';
 import ParkingPage from './pages/ParkingPage';
 import EntriesPage from './pages/EntriesPage';
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/verify-otp" element={<VerifyOtpPage />} />
           
           <Route 
             path="/" 

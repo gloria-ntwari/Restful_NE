@@ -32,8 +32,8 @@ const RegisterPage = () => {
   const onSubmit = async (data) => {
     try {
       await signup({ ...data, role: 'parking_attendant' });
-      toast.success('Registration successful!');
-      navigate('/');
+      toast.success('Registration successful! An OTP code has been sent to your email.');
+      navigate('/verify-otp', { state: { email: data.email } });
     } catch (err) {
       toast.error(err.response?.data?.message || 'Registration failed.');
     }

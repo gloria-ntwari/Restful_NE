@@ -3,6 +3,8 @@ import api from './index';
 export const authApi = {
   login: (credentials) => api.post('/auth/login', credentials),
   register: (userData) => api.post('/auth/register', userData),
+  verifyOtp: (data) => api.post('/auth/verify-otp', data),
+  resendOtp: (data) => api.post('/auth/resend-otp', data),
   getProfile: () => api.get('/auth/profile'),
   getUsers: (page = 1, limit = 10) => api.get(`/auth/users?page=${page}&limit=${limit}`),
   updateUser: (id, data) => api.put(`/auth/users/${id}`, data),

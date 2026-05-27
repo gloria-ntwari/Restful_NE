@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { register, login, getProfile, getAllUsers, updateUser, deleteUser } = require('../controllers/auth.controller');
+const { register, login, getProfile, getAllUsers, updateUser, deleteUser, verifyOtp, resendOtp } = require('../controllers/auth.controller');
 const { authenticateToken, authorizeRoles } = require('../middleware/auth.middleware');
-const { registerSchema, loginSchema, updateUserSchema, validate } = require('../validators');
+const { registerSchema, loginSchema, updateUserSchema, verifyOtpSchema, resendOtpSchema, validate } = require('../validators');
 
 /**
  * @swagger
@@ -201,5 +201,58 @@ router.put('/users/:id', authenticateToken, authorizeRoles('admin'), validate(up
  *         description: User not found
  */
 router.delete('/users/:id', authenticateToken, authorizeRoles('admin'), deleteUser);
+
+/**
+ * @swagger
+ * /api/auth/verify-otp:
+ *   post:
+ *     summary: Verify OTP code
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - otp
+ *             properties:
+ *               email:
+ *                 type: string
+ *               otp:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Account verified successfully
+ *       400:
+ *         description: Invalid or expired OTP
+ */
+router.post('/verify-otp', validate(verifyOtpSchema), verifyOtp);
+
+/**
+ * @swagger
+ * /api/auth/resend-otp:
+ *   post:
+ *     summary: Resend OTP code
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: OTP resent successfully
+ *       400:
+ *         description: Account already verified
+ */
+router.post('/resend-otp', validate(resendOtpSchema), resendOtp);
 
 module.exports = router;

@@ -41,6 +41,24 @@ const updateUserSchema = Joi.object({
   password: Joi.string().min(6).max(128),
 }).min(1);
 
+const verifyOtpSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    'string.email': 'Please provide a valid email address',
+    'any.required': 'Email is required',
+  }),
+  otp: Joi.string().length(6).required().messages({
+    'string.length': 'OTP must be exactly 6 characters',
+    'any.required': 'OTP is required',
+  }),
+});
+
+const resendOtpSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    'string.email': 'Please provide a valid email address',
+    'any.required': 'Email is required',
+  }),
+});
+
 const validate = (schema) => {
   return (req, res, next) => {
     const { error } = schema.validate(req.body, { abortEarly: false });
@@ -56,4 +74,5 @@ const validate = (schema) => {
   };
 };
 
-module.exports = { registerSchema, loginSchema, updateUserSchema, validate };
+module.exports = { registerSchema, loginSchema, updateUserSchema, verifyOtpSchema, resendOtpSchema, validate };
+

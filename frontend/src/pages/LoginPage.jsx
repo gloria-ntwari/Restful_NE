@@ -27,7 +27,12 @@ const LoginPage = () => {
       toast.success('Welcome back!');
       navigate('/');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Login failed. Please try again.');
+      if (err.response?.status === 403 && err.response?.data?.isVerified === false) {
+        toast.warning(err.response.data.message);
+        navigate('/verify-otp', { state: { email: err.response.data.email } });
+      } else {
+        toast.error(err.response?.data?.message || 'Login failed. Please try again.');
+      }
     }
   };
 
